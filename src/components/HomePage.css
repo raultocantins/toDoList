@@ -1,0 +1,55 @@
+.homepage{
+    height: 600px;
+    background-color: #fff;
+    width: 50%;
+    border-radius: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+
+.typography{
+    display: flex!important;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+   
+    width: 100%;
+    height: auto;
+}
+.date{
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.opcoes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    flex-direction: column;
+}
+.opcoes > h5{
+    padding: 0;
+    margin: 10px;
+}
+.input{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 50px;  
+    width: 100%;
+    margin: 15px;
+ 
+}
+.menu{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+.body{
+    overflow-x: auto;
+   height: auto;
+}
