@@ -1,9 +1,15 @@
 .through{
     text-decoration: line-through;
 }
-.itemlist{   
+.itemlist{  
+   
     margin: 10px;
     border-radius: 10px;
-background-color:rgb(245, 241, 241);
+    background-color:rgb(245, 241, 241);
+
 }
 
+.MuiListItemText-secondary  {
+text-align: right;
+
+}

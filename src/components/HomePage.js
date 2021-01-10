@@ -1,34 +1,56 @@
 import React from "react";
+
 import "./HomePage.css";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import ItemList from "./ItemList";
+const low = require("lowdb");
+const FileSync = require('lowdb/adapters/FileSync')
+const adapter = new FileSync('db.json')
+const db = low(adapter)
+db.defaults({ tasks: []})
+  .write()
+
+
+
+
 export default class HomePage extends React.Component {
   state = {
     tasks: [],
     text: "",
+    count: 0,
   };
   constructor(props) {
     super(props);
     this.addTask = this.addTask.bind(this);
     this.onChange = this.onChange.bind(this);
     this.clearList = this.clearList.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   addTask() {
+
+    db.get('tasks')
+    .push({ id: 1, text: 'lowdb is awesome'})
+    .write()
+
+
+
     if (this.state.text) {
-      var task = { id: Math.random(), text: this.state.text };
+      var task = { id: this.state.count, text: this.state.text };
       var tasksRight = this.state.tasks.push(task);
       this.setState({
         ...this.state.tasks,
         tasksRight,
         text: "",
+        count: this.state.count + 1,
       });
     } else {
       alert("Insira uma Task");
@@ -42,6 +64,17 @@ export default class HomePage extends React.Component {
   clearList() {
     this.setState({
       tasks: [],
+    });
+  }
+
+  deleteTask(id) {
+    console.log(this.state.tasks);
+    var tasksRight = this.state.tasks.filter((e) => {
+      return e.id !== id;
+    });
+    console.log(tasksRight);
+    this.setState({
+      task: tasksRight,
     });
   }
 
@@ -100,7 +133,7 @@ export default class HomePage extends React.Component {
 
         <div className="body">
           {this.state.tasks.map((e) => {
-            return <ItemList data={e} key={e.id} />;
+            return <ItemList data={e} key={e.id} remove={this.deleteTask} />;
           })}
         </div>
       </div>
