@@ -4,22 +4,13 @@ import "./HomePage.css";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-
+import Coffee from "../assets/coffee-cup.svg";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import ItemList from "./ItemList";
-const low = require("lowdb");
-const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('db.json')
-const db = low(adapter)
-db.defaults({ tasks: []})
-  .write()
-
-
-
 
 export default class HomePage extends React.Component {
   state = {
@@ -33,16 +24,10 @@ export default class HomePage extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.clearList = this.clearList.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
+    this.Enter = this.Enter.bind(this);
   }
 
   addTask() {
-
-    db.get('tasks')
-    .push({ id: 1, text: 'lowdb is awesome'})
-    .write()
-
-
-
     if (this.state.text) {
       var task = { id: this.state.count, text: this.state.text };
       var tasksRight = this.state.tasks.push(task);
@@ -56,7 +41,13 @@ export default class HomePage extends React.Component {
       alert("Insira uma Task");
     }
   }
-
+  Enter(e) {
+    if (e.key === "Enter") {
+      this.addTask();
+    } else {
+      return;
+    }
+  }
   onChange(e) {
     this.setState({ text: e.target.value });
   }
@@ -68,13 +59,12 @@ export default class HomePage extends React.Component {
   }
 
   deleteTask(id) {
-    console.log(this.state.tasks);
     var tasksRight = this.state.tasks.filter((e) => {
       return e.id !== id;
     });
-    console.log(tasksRight);
+
     this.setState({
-      task: tasksRight,
+      tasks: tasksRight,
     });
   }
 
@@ -87,7 +77,7 @@ export default class HomePage extends React.Component {
             color="default"
             style={{ height: "auto", borderRadius: "10px 10px 0px 0px" }}
           >
-            <Toolbar style={{ height: "autp" }}>
+            <Toolbar style={{ height: "auto",margin:'0' }}>
               <Typography variant="h5" color="primary" className="typography">
                 <div className="menu">
                   <div className="date">
@@ -103,7 +93,7 @@ export default class HomePage extends React.Component {
                       variant="contained"
                       color="secondary"
                       onClick={this.clearList}
-                      style={{ height: "25px", fontSize: "8px" }}
+                      style={{ height: "25px", fontSize: "10px" }}
                     >
                       Clear List
                     </Button>
@@ -117,6 +107,7 @@ export default class HomePage extends React.Component {
                     variant="outlined"
                     onChange={this.onChange}
                     style={{ width: "80%" }}
+                    onKeyPress={(e) => this.Enter(e)}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton onClick={this.addTask}>
@@ -132,9 +123,16 @@ export default class HomePage extends React.Component {
         </div>
 
         <div className="body">
-          {this.state.tasks.map((e) => {
-            return <ItemList data={e} key={e.id} remove={this.deleteTask} />;
-          })}
+          {this.state.tasks.length > 0 ? (
+            this.state.tasks.map((e) => {
+              return <ItemList data={e} key={e.id} remove={this.deleteTask} />;
+            })
+          ) : (
+            <div >
+              <img src={Coffee} alt="cofferImg" className="coffee" />
+              <span className="bydev">Developed by Alex Raul</span>
+            </div>
+          )}
         </div>
       </div>
     );
