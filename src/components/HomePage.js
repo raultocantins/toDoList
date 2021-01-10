@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./HomePage.css";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -38,7 +37,7 @@ export default class HomePage extends React.Component {
         count: this.state.count + 1,
       });
     } else {
-      alert("Insira uma Task");
+      alert("Insira uma Task.");
     }
   }
   Enter(e) {
