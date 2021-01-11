@@ -16,6 +16,7 @@ export default class HomePage extends React.Component {
     tasks: [],
     text: "",
     count: 0,
+    id: 0,
   };
   constructor(props) {
     super(props);
@@ -28,13 +29,14 @@ export default class HomePage extends React.Component {
 
   addTask() {
     if (this.state.text) {
-      var task = { id: this.state.count, text: this.state.text };
+      var task = { id: this.state.id, text: this.state.text };
       var tasksRight = this.state.tasks.push(task);
       this.setState({
         ...this.state.tasks,
         tasksRight,
         text: "",
         count: this.state.count + 1,
+        id: this.state.id + 1,
       });
     } else {
       alert("Insira uma Task.");
@@ -54,17 +56,20 @@ export default class HomePage extends React.Component {
   clearList() {
     this.setState({
       tasks: [],
+      text: "",
+      count: 0,
+      id: 0,
     });
   }
 
   deleteTask(id) {
-    var tasksRight = this.state.tasks.filter((e) => {
-      return e.id !== id;
-    });
-
-    this.setState({
-      tasks: tasksRight,
-    });
+    if (this.state.count) {
+      this.setState({
+        count: this.state.count - 1,
+      });
+    } else {
+      return;
+    }
   }
 
   render() {
@@ -76,7 +81,7 @@ export default class HomePage extends React.Component {
             color="default"
             style={{ height: "auto", borderRadius: "10px 10px 0px 0px" }}
           >
-            <Toolbar style={{ height: "auto",margin:'0' }}>
+            <Toolbar style={{ height: "auto", margin: "0" }}>
               <Typography variant="h5" color="primary" className="typography">
                 <div className="menu">
                   <div className="date">
@@ -84,8 +89,8 @@ export default class HomePage extends React.Component {
                   </div>
                   <div className="opcoes">
                     <h5>
-                      {this.state.tasks.length}{" "}
-                      {this.state.tasks.length > 1 ? "Tasks" : "Task"}{" "}
+                      {this.state.count}{" "}
+                      {this.state.count > 1 ? "Tasks" : "Task"}{" "}
                     </h5>
                     <Button
                       size="small"
@@ -127,7 +132,7 @@ export default class HomePage extends React.Component {
               return <ItemList data={e} key={e.id} remove={this.deleteTask} />;
             })
           ) : (
-            <div >
+            <div>
               <img src={Coffee} alt="cofferImg" className="coffee" />
               <span className="bydev">Developed by Alex Raul</span>
             </div>

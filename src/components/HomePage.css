@@ -4,6 +4,7 @@
 
 
 .homepage {
+  
   height: 600px;
   background-color: #fff;
   width: 50%;
@@ -74,6 +75,7 @@
 ::-webkit-scrollbar {
   background-color: transparent;
   width: 5px;
+  height: 5px;
   
 }
 ::-webkit-scrollbar-thumb {

@@ -2,14 +2,22 @@
     text-decoration: line-through;
 }
 .itemlist{  
-   
+  
     margin: 10px;
     border-radius: 10px;
     background-color:rgb(245, 241, 241);
+   
+   
 
 }
 
 .MuiListItemText-secondary  {
 text-align: right;
 
+}
+
+.MuiListItemText-primary {
+    text-align: center;
+    font-weight:700!important;
+    overflow-x: auto;
 }
